@@ -1,0 +1,34 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/chd
+    username: chd
+    password: chd1234!
+  jpa:
+    database: mysql
+    database-platform: org.hibernate.dialect.MySQL8Dialect
+    show-sql: true
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate:
+        format_sql: true
+
+  flyway:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    enabled: true
+    baseline-on-migrate: true
+    url: jdbc:mysql://localhost:3306/chd
+    user: chd
+    password: chd1234!
+    locations: classpath:/db/migration
+    baseline-version: 1
+
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+
+logging:
+  level:
+    org.hibernate.SQL: debug
+    org.hibernate.type: trace
