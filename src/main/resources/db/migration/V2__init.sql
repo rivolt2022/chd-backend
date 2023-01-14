@@ -1,7 +1,6 @@
-CREATE TABLE IF NOT EXISTS `member`(
+CREATE TABLE IF NOT EXISTS `translate`(
     `id` BIGINT NOT NULL AUTO_INCREMENT,
-    `name` VARCHAR(255),
-    `email` VARCHAR(50),
+    `query` VARCHAR(500),
     `created_at` DATETIME,
     `updated_at` DATETIME,
     PRIMARY KEY (`id`)

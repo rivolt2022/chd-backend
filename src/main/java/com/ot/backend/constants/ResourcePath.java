@@ -6,4 +6,6 @@ public interface ResourcePath {
     String API = "/api";
     String MEMBERS = "/members";
 
+    String TRANSLATES = "/translates";
+
 }

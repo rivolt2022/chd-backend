@@ -15,4 +15,7 @@ public class MemberParam {
     @ApiModelProperty(value = "사용자 이름(샘플)")
     private String name; // user's name
 
+    @ApiModelProperty(value = "사용자 이름(샘플)")
+    private String email; // user's name
+
 }

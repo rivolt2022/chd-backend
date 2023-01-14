@@ -1,7 +1,7 @@
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/chd
+    url: jdbc:mysql://localhost:3307/chd
     username: chd
     password: chd1234!
   jpa:
@@ -18,7 +18,7 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
     enabled: true
     baseline-on-migrate: true
-    url: jdbc:mysql://localhost:3306/chd
+    url: jdbc:mysql://localhost:3307/chd
     user: chd
     password: chd1234!
     locations: classpath:/db/migration

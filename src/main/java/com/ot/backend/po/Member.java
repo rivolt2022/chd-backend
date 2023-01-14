@@ -16,4 +16,6 @@ public class Member extends AbstractPersistentObject {
     private Long id;
 
     private String name;
+
+    private String email;
 }
