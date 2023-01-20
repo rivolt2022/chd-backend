@@ -29,4 +29,8 @@ public class MemberDomain extends BaseDomain<Member, Long> {
             throws Exception {
         return transformer.param2PO(getClassT(), param, member);
     }
+
+    public Member findById(Long id) {
+        return memberRepository.findById(id).orElse(null);
+    }
 }

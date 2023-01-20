@@ -20,4 +20,5 @@ public class Translate extends AbstractPersistentObject {
 
     private String query;
 
+    private String translation;
 }

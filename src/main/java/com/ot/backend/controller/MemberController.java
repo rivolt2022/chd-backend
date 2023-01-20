@@ -28,6 +28,21 @@ public class MemberController {
         this.memberDomain = memberDomain;
     }
 
+    @GetMapping("/detail")
+    public ResponseEntity<Member> detail(@RequestParam(name="id", required = true) Long id) {
+        try {
+            Member member = memberDomain.findById(id);
+            if(member != null) {
+                return new ResponseEntity<>(member, HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
+        } catch (Exception e) {
+            return httpResultHelper.errorResp(e, ErrorType.UNKNOWN, e.getMessage(),
+                    HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
     @RequestMapping(value = "/modify", method = RequestMethod.POST)
     @ApiOperation(value = "Modify", httpMethod = "POST", response = Member.class)
     public ResponseEntity detail(@RequestBody MemberParam param) {

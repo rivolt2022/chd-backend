@@ -1,7 +1,6 @@
 package com.ot.backend.domain;
 
 import com.ot.backend.component.Transformer;
-import com.ot.backend.controller.params.MemberParam;
 import com.ot.backend.controller.params.TranslateParam;
 import com.ot.backend.po.Translate;
 import com.ot.backend.repository.CustomRepository;
@@ -17,17 +16,30 @@ public class TranslateDomain extends BaseDomain<Translate, Long> {
 
     @Transactional
     public Translate create(TranslateParam param) throws Exception {
-        return super.createByPO(Translate.class, resourceParam2PO(param, new Translate()));
+        Translate translate = new Translate();
+        translate.setQuery(param.getQuery());
+        return super.create(translate);
     }
 
-    public TranslateDomain(CustomRepository<Translate, Long> repository, Transformer transformer,
-                        TranslateRepository translateRepository) {
-        super(repository, transformer);
-        this.translateRepository = translateRepository;
+    public String findById(Long id) {
+        Translate translate = translateRepository.findById(id).orElse(null);
+        if(translate!=null) {
+            return translate.getQuery();
+        }
+        return null;
     }
 
-    private Translate resourceParam2PO(TranslateParam param, Translate translate)
-            throws Exception {
-        return transformer.param2PO(getClassT(), param, translate);
+    public String findByQuery(String query) {
+        Translate translate = translateRepository.findByQuery(query);
+        if(translate!=null) {
+            return translate. getQuery();
+        }
+        return null;
     }
+
+    public TranslateDomain(TranslateRepository repository) {
+        super((CustomRepository<Translate, Long>) repository);
+        this.translateRepository = repository;
+    }
+
 }
