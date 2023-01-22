@@ -14,8 +14,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import static com.ot.backend.po.QTranslate.translate;
-
 @Api("Translate")
 @RestController
 @RequestMapping(
@@ -37,7 +35,7 @@ public class TranslateController {
     @GetMapping("/translate/{id}")
     public ResponseEntity<Translate> findById(@PathVariable Long id) {
         Translate translate = translateRepository.findById(id).orElse(null);
-        if(translate!=null) {
+        if(translate != null) {
             return new ResponseEntity<>(translate, HttpStatus.OK);
         }
         else{
@@ -59,7 +57,6 @@ public class TranslateController {
     @ApiOperation(value = "Translate", httpMethod = "POST", response = Translate.class)
     public ResponseEntity<Translate> translate(@RequestBody TranslateParam param) {
         try {
-            // return null;
             return new ResponseEntity<>(this.translateDomain.create(param), HttpStatus.OK);
         } catch (Exception e) {
             // Return unknown error and log the exception.
@@ -67,4 +64,21 @@ public class TranslateController {
                     HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+    @DeleteMapping("/translate/{id}")
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
+        translateRepository.deleteById(id);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+    @PutMapping("/translate/{id}")
+    public ResponseEntity<Translate> update(@PathVariable Long id, @RequestBody Translate translate) {
+        Translate currentTranslate = translateRepository.findById(id).orElse(null);
+        if(currentTranslate != null) {
+            currentTranslate.setQuery(translate.getQuery());
+            currentTranslate.setTranslation(translate.getTranslation());
+            return new ResponseEntity<>(translateRepository.save(currentTranslate), HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
 }

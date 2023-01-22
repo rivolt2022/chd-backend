@@ -18,7 +18,7 @@ public class TranslateDomain extends BaseDomain<Translate, Long> {
     public Translate create(TranslateParam param) throws Exception {
         Translate translate = new Translate();
         translate.setQuery(param.getQuery());
-        return super.create(translate);
+        return super.create(Translate.class, translate);
     }
 
     public String findById(Long id) {
@@ -37,9 +37,10 @@ public class TranslateDomain extends BaseDomain<Translate, Long> {
         return null;
     }
 
-    public TranslateDomain(TranslateRepository repository) {
-        super((CustomRepository<Translate, Long>) repository);
-        this.translateRepository = repository;
+    public TranslateDomain(CustomRepository<Translate, Long> repository, Transformer transformer,
+                        TranslateRepository translateRepository) {
+        super(repository, transformer);
+        this.translateRepository = translateRepository;
     }
 
 }
