@@ -6,7 +6,6 @@ import com.ot.backend.controller.params.TranslateParam;
 import com.ot.backend.domain.TranslateDomain;
 import com.ot.backend.enums.ErrorType;
 import com.ot.backend.po.Translate;
-import com.ot.backend.repository.translate.TranslateRepository;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +23,7 @@ public class TranslateController {
 
     private final HttpResultHelper httpResultHelper;
     private final TranslateDomain translateDomain;
+
 
     @Autowired
     public TranslateController(HttpResultHelper httpResultHelper, TranslateDomain translateDomain) {
@@ -52,7 +52,7 @@ public class TranslateController {
         }
     }
 
-    @RequestMapping(value = "/translate", method = RequestMethod.POST)
+    @PostMapping("/translate")
     @ApiOperation(value = "Translate", httpMethod = "POST", response = Translate.class)
     public ResponseEntity<Translate> translate(@RequestBody TranslateParam param) {
         try {
@@ -65,21 +65,24 @@ public class TranslateController {
     }
 
     @DeleteMapping("/translate/{id}")
-    public ResponseEntity<Void> delete(@PathVariable("id") Long id) {
-        translateDomain.deleteById(id);
-        return new ResponseEntity<>(HttpStatus.OK);
-    }
-
-    @PutMapping("/translate/{id}")
-    public ResponseEntity<Translate> update(@PathVariable("id") Long id, @RequestBody Translate translate) {
-        Translate currentTranslate = translateDomain.findById(id);
-        if(currentTranslate != null) {
-            currentTranslate.setQuery(translate.getQuery());
-            currentTranslate.setTranslation(translate.getTranslation());
-            return new ResponseEntity<>(translateDomain.save(currentTranslate), HttpStatus.OK);
+    public ResponseEntity delete(@PathVariable("id") Long id) {
+        Translate translate = translateDomain.findById(id);
+        if(translate != null) {
+            translateDomain.deleteById(id);
+            return new ResponseEntity<>(HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
 
+    @PutMapping("/translate/{id}")
+    public ResponseEntity update(@PathVariable("id") Long id, @RequestBody Translate translate) {
+        Translate currentTranslate = translateDomain.findById(id);
+        if(currentTranslate != null) {
+            currentTranslate = translateDomain.update(currentTranslate, translate);
+            return new ResponseEntity<>(currentTranslate, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
 }

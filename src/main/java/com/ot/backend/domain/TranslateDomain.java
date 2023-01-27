@@ -26,27 +26,25 @@ public class TranslateDomain extends BaseDomain<Translate, Long> {
         return super.create(Translate.class, translate);
     }
 
+    @Transactional(readOnly = true)
     public Translate findById(Long id) {
-        Translate translate = translateRepository.findById(id).orElse(null);
-        if (translate != null) {
-            return translate;
-        }
-        return null;
+        return translateRepository.findById(id).orElse(null);
     }
 
+    @Transactional(readOnly = true)
     public List<Translate> findByQuery(String query) {
-        List<Translate> translate = translateRepository.findByQuery(query);
-        if (translate != null) {
-            return translate;
-        }
-        return null;
+        return translateRepository.findByQuery(query);
     }
 
+    @Transactional
     public void deleteById(Long id) {
         translateRepository.deleteById(id);
     }
 
-    public Translate save(Translate currentTranslate) {
+    @Transactional
+    public Translate update(Translate currentTranslate, Translate updatedTranslate) {
+        currentTranslate.setQuery(updatedTranslate.getQuery());
+        currentTranslate.setTranslation(updatedTranslate.getTranslation());
         return translateRepository.save(currentTranslate);
     }
 
