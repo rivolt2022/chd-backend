@@ -10,7 +10,6 @@ import javax.persistence.Id;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
 @Setter
 @Getter
 public class Translate extends AbstractPersistentObject {
@@ -21,4 +20,10 @@ public class Translate extends AbstractPersistentObject {
     private String query;
 
     private String translation;
+
+    @Builder
+    public Translate(String query, String translation) {
+       this.query = query;
+       this.translation = translation;
+    }
 }

@@ -12,4 +12,7 @@ public class TranslateParam {
 
     @ApiModelProperty(value = "번역할 한글")
     private String query;
+
+    @ApiModelProperty(value = "번역된 영어")
+    private String translation;
 }
