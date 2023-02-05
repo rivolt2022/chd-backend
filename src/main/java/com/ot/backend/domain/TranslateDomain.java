@@ -33,7 +33,7 @@ public class TranslateDomain extends BaseDomain<Translate, Long> {
 
     @Transactional(readOnly = true)
     public List<Translate> findByQuery(String query) {
-        return translateRepository.findByQuery(query);
+        return translateRepository.findByQueryContaining(query);
     }
 
     @Transactional

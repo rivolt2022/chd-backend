@@ -10,8 +10,8 @@ import java.util.List;
 @Repository
 public interface TranslateRepository extends CustomRepository<Translate, Long> {
 
-    @Query("SELECT t FROM Translate t WHERE t.query = :query")
-    List<Translate> findByQuery(String query);
+    @Query("SELECT t FROM Translate t WHERE t.query LIKE %:query%")
+    List<Translate> findByQueryContaining(String query);
 
     @Modifying
     @Query("DELETE FROM Translate t WHERE t.id = :id")
