@@ -15,4 +15,10 @@ public class TranslateParam {
 
     @ApiModelProperty(value = "번역된 영어")
     private String translation;
+
+    @ApiModelProperty(value = "영어 답변")
+    private String answer;
+
+    @ApiModelProperty(value = "한글로 번역된 답변")
+    private String answerTranslation;
 }

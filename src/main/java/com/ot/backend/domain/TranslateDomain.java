@@ -18,10 +18,11 @@ public class TranslateDomain extends BaseDomain<Translate, Long> {
 
     @Transactional
     public Translate create(TranslateParam param) throws Exception {
-//        Translate translate = new Translate(param.getQuery(), param.getTranslation());
         Translate translate = Translate.builder()
                 .query(param.getQuery())
                 .translation(param.getTranslation())
+                .answer(param.getAnswer())
+                .answerTranslation(param.getAnswerTranslation())
                 .build();
         return super.create(Translate.class, translate);
     }
@@ -45,6 +46,8 @@ public class TranslateDomain extends BaseDomain<Translate, Long> {
     public Translate update(Translate currentTranslate, Translate updatedTranslate) {
         currentTranslate.setQuery(updatedTranslate.getQuery());
         currentTranslate.setTranslation(updatedTranslate.getTranslation());
+        currentTranslate.setAnswer(updatedTranslate.getAnswer());
+        currentTranslate.setAnswerTranslation(updatedTranslate.getAnswerTranslation());
         return translateRepository.save(currentTranslate);
     }
 
