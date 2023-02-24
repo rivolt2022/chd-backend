@@ -28,4 +28,14 @@ public class Translate extends AbstractPersistentObject {
        this.answer = answer;
        this.answerTranslation = answerTranslation;
     }
+
+    public void updateTranslate(String query, String translation) {
+        this.query = query;
+        this.translation = translation;
+    }
+
+    public void updateAnswer(String answer, String answerTranslation) {
+        this.answer = answer;
+        this.answerTranslation = answerTranslation;
+    }
 }

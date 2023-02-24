@@ -34,10 +34,9 @@ public class TranslateController {
     @GetMapping("/translate/{id}")
     public ResponseEntity<Translate> findById(@PathVariable("id") Long id) {
         Translate translate = translateDomain.findById(id);
-        if(translate != null) {
+        if (translate != null) {
             return new ResponseEntity<>(translate, HttpStatus.OK);
-        }
-        else{
+        } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
@@ -67,7 +66,7 @@ public class TranslateController {
     @DeleteMapping("/translate/{id}")
     public ResponseEntity delete(@PathVariable("id") Long id) {
         Translate translate = translateDomain.findById(id);
-        if(translate != null) {
+        if (translate != null) {
             translateDomain.deleteById(id);
             return new ResponseEntity<>(HttpStatus.OK);
         } else {
@@ -75,14 +74,15 @@ public class TranslateController {
         }
     }
 
-    @PutMapping("/translate/{id}")
+    @PutMapping("/translate/{id}/query")
     public ResponseEntity update(@PathVariable("id") Long id, @RequestBody Translate translate) {
-        Translate currentTranslate = translateDomain.findById(id);
-        if(currentTranslate != null) {
-            currentTranslate = translateDomain.update(currentTranslate, translate);
-            return new ResponseEntity<>(currentTranslate, HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
+        Translate currentTranslate = translateDomain.update(id, translate);
+        return new ResponseEntity<>(currentTranslate, HttpStatus.OK);
+    }
+
+    @PutMapping("/translate/{id}/answer")
+    public ResponseEntity updateAnswer(@PathVariable("id") Long id, @RequestBody Translate translate) {
+        Translate currentTranslate = translateDomain.updateAnswer(id, translate);
+        return new ResponseEntity<>(currentTranslate, HttpStatus.OK);
     }
 }

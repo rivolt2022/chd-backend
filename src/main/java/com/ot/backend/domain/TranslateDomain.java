@@ -1,6 +1,8 @@
 package com.ot.backend.domain;
 
 import com.ot.backend.component.Transformer;
+import com.ot.backend.config.CommonException;
+import com.ot.backend.config.ErrorInfo;
 import com.ot.backend.controller.params.TranslateParam;
 import com.ot.backend.po.Translate;
 import com.ot.backend.repository.CustomRepository;
@@ -29,7 +31,7 @@ public class TranslateDomain extends BaseDomain<Translate, Long> {
 
     @Transactional(readOnly = true)
     public Translate findById(Long id) {
-        return translateRepository.findById(id).orElse(null);
+        return translateRepository.findById(id).orElseThrow(() -> new CommonException(ErrorInfo.NOT_FOUND));
     }
 
     @Transactional(readOnly = true)
@@ -43,11 +45,16 @@ public class TranslateDomain extends BaseDomain<Translate, Long> {
     }
 
     @Transactional
-    public Translate update(Translate currentTranslate, Translate updatedTranslate) {
-        currentTranslate.setQuery(updatedTranslate.getQuery());
-        currentTranslate.setTranslation(updatedTranslate.getTranslation());
-        currentTranslate.setAnswer(updatedTranslate.getAnswer());
-        currentTranslate.setAnswerTranslation(updatedTranslate.getAnswerTranslation());
+    public Translate update(Long id, Translate updatedTranslate) {
+        Translate currentTranslate = findById(id);
+        currentTranslate.updateTranslate(updatedTranslate.getQuery(), updatedTranslate.getTranslation());
+        return translateRepository.save(currentTranslate);
+    }
+
+    @Transactional
+    public Translate updateAnswer(Long id, Translate updateAnswer) {
+        Translate currentTranslate = findById(id);
+        currentTranslate.updateAnswer(updateAnswer.getAnswer(), updateAnswer.getAnswerTranslation());
         return translateRepository.save(currentTranslate);
     }
 
